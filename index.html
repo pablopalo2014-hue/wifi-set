@@ -1,1 +1,1011 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajustes de conexión a Nintendo Wi-Fi Connection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --ds-blue-header: #0052ad;
+            --ds-blue-body: #003080;
+            --ds-bg-grid-1: #c8e0f0;
+            --ds-bg-grid-2: #b0d0e8;
+            --ds-orange-start: #ffaa00;
+            --ds-orange-mid: #e07000;
+            --ds-orange-end: #b04000;
+            --ds-blue-btn-start: #3090f0;
+            --ds-blue-btn-mid: #0050c0;
+            --ds-blue-btn-end: #003080;
+            --ds-gray-start: #ffffff;
+            --ds-gray-mid: #d0d0d8;
+            --ds-gray-end: #9898a0;
+        }
 
+        body {
+            font-family: 'Press Start 2P', monospace;
+            background-color: #0d0e12;
+            color: #000;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        /* Scaled DS Screen Dimensions (256x192 base pixel aspect ratio scaled 1.75x) */
+        .ds-screen {
+            width: 448px;
+            height: 336px;
+            position: relative;
+            overflow: hidden;
+            border: 4px solid #000000;
+            box-shadow: 0 0 12px rgba(0,0,0,0.8);
+        }
+
+        @media (max-width: 480px) {
+            .ds-screen {
+                width: 320px;
+                height: 240px;
+            }
+        }
+
+        /* Top Screen Background Texture */
+        .ds-top-bg {
+            background-color: #003a88;
+            background-image: 
+                linear-gradient(0deg, rgba(0, 0, 0, 0.25) 50%, transparent 50%),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 100% 4px, 8px 100%;
+        }
+
+        /* Bottom Screen Authentic Diagonal Mesh Grid */
+        .ds-touch-bg {
+            background-color: #c4dce8;
+            background-image: 
+                linear-gradient(45deg, #b0ccc0 25%, transparent 25%), 
+                linear-gradient(-45deg, #b0ccc0 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #b0ccc0 75%),
+                linear-gradient(-45deg, transparent 75%, #b0ccc0 75%);
+            background-size: 8px 8px;
+            background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+        }
+
+        /* Pixel-perfect DS Typography scaling */
+        .pixel-ds-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .pixel-ds-body {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 9px;
+            line-height: 1.5;
+        }
+
+        .pixel-ds-sm {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 7px;
+            line-height: 1.4;
+        }
+
+        .pixel-ds-lg {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        /* Authentic NDS Bevels & Buttons */
+        .ds-border-box {
+            border: 2px solid #000000;
+            box-shadow: inset 2px 2px 0px rgba(255, 255, 255, 0.7), inset -2px -2px 0px rgba(0, 0, 0, 0.4);
+        }
+
+        .ds-btn-orange {
+            background: linear-gradient(180deg, #ffb020 0%, #e06800 50%, #b03800 100%);
+            border: 2px solid #000;
+            box-shadow: inset 2px 2px 0px #ffe080, inset -2px -2px 0px #601800;
+            color: #ffffff;
+            text-shadow: 1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000;
+        }
+
+        .ds-btn-orange:active {
+            background: linear-gradient(180deg, #b03800 0%, #e06800 100%);
+            box-shadow: inset 2px 2px 0px #401000, inset -2px -2px 0px #ffd060;
+            transform: translateY(1px);
+        }
+
+        .ds-btn-blue {
+            background: linear-gradient(180deg, #3898f8 0%, #0050c8 50%, #002888 100%);
+            border: 2px solid #000;
+            box-shadow: inset 2px 2px 0px #a0d0ff, inset -2px -2px 0px #001040;
+            color: #ffffff;
+            text-shadow: 1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000;
+        }
+
+        .ds-btn-blue:active {
+            background: linear-gradient(180deg, #002888 0%, #0050c8 100%);
+            box-shadow: inset 2px 2px 0px #000820, inset -2px -2px 0px #80c0ff;
+            transform: translateY(1px);
+        }
+
+        .ds-btn-gray {
+            background: linear-gradient(180deg, #ffffff 0%, #d0d0d8 50%, #9090a0 100%);
+            border: 2px solid #000;
+            box-shadow: inset 2px 2px 0px #ffffff, inset -2px -2px 0px #505060;
+            color: #000000;
+        }
+
+        .ds-btn-gray:active {
+            background: linear-gradient(180deg, #707080 0%, #c0c0c8 100%);
+            box-shadow: inset 2px 2px 0px #303040, inset -2px -2px 0px #ffffff;
+            transform: translateY(1px);
+        }
+
+        .ds-slot-ready {
+            background: linear-gradient(180deg, #48e048 0%, #10a010 50%, #006000 100%);
+            border: 2px solid #000;
+            box-shadow: inset 2px 2px 0px #a0ffa0, inset -2px -2px 0px #003000;
+            color: #ffffff;
+            text-shadow: 1px 1px 0px #000;
+        }
+
+        /* Scanline Overlay for DS LCD look */
+        .lcd-scanlines {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.12) 50%);
+            background-size: 100% 2px;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* Stylus Touch Animation */
+        @keyframes stylusPress {
+            0% { transform: scale(0.3); opacity: 0.9; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+
+        .stylus-effect {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(255, 238, 0, 0.7);
+            border: 2px solid #ffffff;
+            pointer-events: none;
+            animation: stylusPress 0.25s ease-out forwards;
+            z-index: 99;
+        }
+
+        /* Custom NDS scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #a8c0d0;
+            border-left: 2px solid #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0050c0;
+            border: 2px solid #000;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-2 sm:p-4 gap-3 bg-neutral-950">
+
+    <!-- TOP SCREEN DISPLAY (256x192 Scaled) -->
+    <div class="ds-screen ds-top-bg flex flex-col justify-between p-2 rounded-sm select-none">
+        <div class="lcd-scanlines"></div>
+
+        <!-- Top Header Banner -->
+        <div class="w-full bg-gradient-to-r from-blue-950 via-blue-700 to-blue-950 border-2 border-black px-2 py-1 flex items-center justify-between shadow">
+            <div class="flex items-center gap-1.5 truncate">
+                <div class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></div>
+                <span id="top-title" class="pixel-ds-title text-white truncate">Ajustes de conexión a NWC</span>
+            </div>
+            <!-- Signal Bars Icon -->
+            <div class="flex items-end gap-0.5 h-3.5 w-5 bg-blue-950 p-0.5 rounded border border-blue-400">
+                <div class="w-1 h-1 bg-green-400"></div>
+                <div class="w-1 h-2 bg-green-400"></div>
+                <div class="w-1 h-3 bg-green-400"></div>
+            </div>
+        </div>
+
+        <!-- Central Dialogue Box -->
+        <div class="flex-1 my-2 bg-gradient-to-b from-blue-950/95 to-blue-900/95 border-2 border-black p-3 flex flex-col justify-between rounded shadow-inner relative overflow-hidden">
+            <div id="top-message-area" class="space-y-2 relative z-10">
+                <p id="top-text-primary" class="pixel-ds-body text-yellow-300 leading-relaxed">
+                    Elige los ajustes que quieres modificar.
+                </p>
+                <p id="top-text-secondary" class="pixel-ds-sm text-blue-200 leading-relaxed">
+                    Si necesitas ayuda adicional, consulta el manual de instrucciones de la consola o juego.
+                </p>
+            </div>
+
+            <!-- Dynamic Progress Card for Connection Tests -->
+            <div id="top-status-card" class="hidden relative z-10 bg-blue-900 border-2 border-blue-400 p-2.5 rounded text-center my-auto">
+                <p id="top-status-title" class="pixel-ds-title text-white mb-1">PROBANDO CONEXIÓN...</p>
+                <div class="w-full bg-black h-3 rounded border border-gray-500 overflow-hidden p-0.5">
+                    <div id="top-progress-bar" class="h-full bg-gradient-to-r from-yellow-400 to-green-400 w-0 transition-all duration-300"></div>
+                </div>
+                <p id="top-status-sub" class="pixel-ds-sm text-yellow-200 mt-1">Conectando al punto de acceso...</p>
+            </div>
+
+            <div class="flex justify-between items-center text-[7px] text-blue-300 border-t border-blue-800/80 pt-1 relative z-10">
+                <span>NINTENDO WFC</span>
+                <span id="screen-state-tag">MENÚ PRINCIPAL</span>
+            </div>
+        </div>
+
+        <!-- Top Footer Bar -->
+        <div class="flex justify-between items-center px-1 text-[7px] text-blue-200">
+            <span>MAC: <span id="ds-mac-display">00-09-BF-F4-8E-11</span></span>
+            <span class="text-amber-300">NINTENDO DS</span>
+        </div>
+    </div>
+
+    <!-- Screen Separator Gap Bar -->
+    <div class="w-full max-w-[448px] h-3 bg-neutral-800 rounded flex justify-center items-center border border-neutral-700">
+        <div class="w-16 h-1 bg-neutral-600 rounded-full"></div>
+    </div>
+
+    <!-- BOTTOM TOUCH SCREEN DISPLAY (256x192 Scaled) -->
+    <div id="touch-screen" class="ds-screen ds-touch-bg p-2 rounded-sm select-none cursor-pointer flex flex-col justify-between">
+        <div class="lcd-scanlines"></div>
+
+        <!-- VIEW 1: MAIN MENU -->
+        <div id="view-main" class="w-full h-full flex flex-col justify-between">
+            <div class="space-y-2.5 pt-2">
+                <button onclick="navigateTo('view-connections')" class="w-full h-24 ds-btn-orange rounded-xl p-2 flex items-center justify-center text-center transition-transform active:scale-[0.98]">
+                    <span class="pixel-ds-lg">Ajustes de conexión a<br>Nintendo Wi-Fi Connection</span>
+                </button>
+
+                <button onclick="navigateTo('view-options')" class="w-full h-14 ds-btn-blue rounded-xl p-2 flex items-center justify-center text-center transition-transform active:scale-[0.98]">
+                    <span class="pixel-ds-body">Opciones</span>
+                </button>
+            </div>
+
+            <div class="flex justify-start pb-1">
+                <button onclick="playBackSFX(); showToast('Saliendo a menú principal...');" class="w-28 h-9 ds-btn-gray rounded-lg flex items-center justify-center text-center">
+                    <span class="pixel-ds-body">Volver</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- VIEW 2: CONNECTION SLOTS MENU -->
+        <div id="view-connections" class="w-full h-full hidden flex-col justify-between">
+            <div class="space-y-2 pt-1">
+                <!-- Slot 1 -->
+                <div id="slot-1-card" onclick="selectSlot(1)" class="w-full h-12 ds-btn-gray rounded-lg px-3 flex items-center justify-between cursor-pointer hover:brightness-105">
+                    <span class="pixel-ds-body font-bold">Conexión 1</span>
+                    <span id="slot-1-status" class="pixel-ds-sm text-gray-700 bg-gray-200/90 px-2 py-1 rounded border border-gray-400">Ninguna</span>
+                </div>
+
+                <!-- Slot 2 -->
+                <div id="slot-2-card" onclick="selectSlot(2)" class="w-full h-12 ds-btn-gray rounded-lg px-3 flex items-center justify-between cursor-pointer hover:brightness-105">
+                    <span class="pixel-ds-body font-bold">Conexión 2</span>
+                    <span id="slot-2-status" class="pixel-ds-sm text-gray-700 bg-gray-200/90 px-2 py-1 rounded border border-gray-400">Ninguna</span>
+                </div>
+
+                <!-- Slot 3 -->
+                <div id="slot-3-card" onclick="selectSlot(3)" class="w-full h-12 ds-btn-gray rounded-lg px-3 flex items-center justify-between cursor-pointer hover:brightness-105">
+                    <span class="pixel-ds-body font-bold">Conexión 3</span>
+                    <span id="slot-3-status" class="pixel-ds-sm text-gray-700 bg-gray-200/90 px-2 py-1 rounded border border-gray-400">Ninguna</span>
+                </div>
+
+                <!-- USB Connector -->
+                <button onclick="openUsbConnectorModal()" class="w-full h-12 ds-btn-blue rounded-lg px-2 flex items-center justify-center text-center">
+                    <span class="pixel-ds-sm">Conector USB Wi-Fi de Nintendo</span>
+                </button>
+            </div>
+
+            <div class="flex justify-between items-center pt-1 border-t border-blue-400">
+                <button onclick="navigateTo('view-main', true)" class="w-24 h-8 ds-btn-gray rounded-lg flex items-center justify-center">
+                    <span class="pixel-ds-body">Volver</span>
+                </button>
+                <button onclick="clearCurrentSlot()" class="w-36 h-8 ds-btn-gray rounded-lg flex items-center justify-center">
+                    <span class="pixel-ds-sm text-red-700">Borrar ajustes</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- VIEW 3: CONNECTION DETAIL MENU -->
+        <div id="view-slot-detail" class="w-full h-full hidden flex-col justify-between">
+            <div class="text-center py-1 bg-blue-900 text-white border-2 border-black rounded shadow-sm">
+                <span id="detail-slot-title" class="pixel-ds-body text-yellow-300">CONEXIÓN 1</span>
+            </div>
+
+            <div class="space-y-2 my-auto">
+                <button onclick="startWifiScan()" class="w-full h-12 ds-btn-orange rounded-xl flex items-center justify-center text-center">
+                    <span class="pixel-ds-body">Buscar punto de acceso</span>
+                </button>
+
+                <button onclick="openManualSetup()" class="w-full h-11 ds-btn-blue rounded-xl flex items-center justify-center text-center">
+                    <span class="pixel-ds-body">Configuración manual</span>
+                </button>
+
+                <button onclick="runConnectionTest()" class="w-full h-10 ds-btn-gray rounded-lg flex items-center justify-center text-center">
+                    <span class="pixel-ds-body">Prueba de conexión</span>
+                </button>
+            </div>
+
+            <div class="flex justify-start">
+                <button onclick="navigateTo('view-connections', true)" class="w-24 h-8 ds-btn-gray rounded-lg flex items-center justify-center">
+                    <span class="pixel-ds-body">Volver</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- VIEW 4: WI-FI ACCESS POINT SCANNER -->
+        <div id="view-scan" class="w-full h-full hidden flex-col justify-between">
+            <div class="flex justify-between items-center bg-blue-900 text-white px-2 py-1 rounded border-2 border-black">
+                <span class="pixel-ds-sm">Puntos de acceso</span>
+                <button onclick="startWifiScan()" class="text-[7px] bg-blue-600 px-1.5 py-0.5 rounded border border-white hover:bg-blue-500">Reintentar</button>
+            </div>
+
+            <div id="ap-list" class="flex-1 my-1 overflow-y-auto space-y-1.5 pr-1 max-h-[200px]">
+                <!-- Populated dynamically -->
+            </div>
+
+            <div class="flex justify-start pt-1 border-t border-blue-400">
+                <button onclick="navigateTo('view-slot-detail', true)" class="w-24 h-8 ds-btn-gray rounded-lg flex items-center justify-center">
+                    <span class="pixel-ds-body">Volver</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- VIEW 5: MANUAL CONFIGURATION EDITOR -->
+        <div id="view-manual" class="w-full h-full hidden flex-col justify-between">
+            <div class="bg-blue-900 text-white px-2 py-1 rounded border-2 border-black flex justify-between items-center">
+                <span class="pixel-ds-sm">Ajustes detallados</span>
+                <span id="manual-slot-name" class="text-[8px] text-yellow-300">CONEXIÓN 1</span>
+            </div>
+
+            <div class="flex-1 overflow-y-auto my-1 pr-1 space-y-1 text-[8px]">
+                <!-- SSID -->
+                <div class="bg-white p-1 rounded border border-black flex justify-between items-center">
+                    <span class="font-bold">SSID:</span>
+                    <button onclick="openKeyboard('ssid')" id="field-ssid" class="bg-gray-100 px-2 py-0.5 border border-black rounded font-mono truncate max-w-[160px]">
+                        MiRedWiFi
+                    </button>
+                </div>
+
+                <!-- WEP Key -->
+                <div class="bg-white p-1 rounded border border-black flex justify-between items-center">
+                    <span class="font-bold">Clave WEP:</span>
+                    <button onclick="openKeyboard('wep')" id="field-wep" class="bg-gray-100 px-2 py-0.5 border border-black rounded font-mono truncate max-w-[160px]">
+                        Ninguna
+                    </button>
+                </div>
+
+                <!-- Auto IP -->
+                <div class="bg-white p-1 rounded border border-black flex justify-between items-center">
+                    <span class="font-bold">Obtener IP auto:</span>
+                    <div class="flex gap-1">
+                        <button id="btn-ip-auto-yes" onclick="setAutoIp(true)" class="px-2 py-0.5 border border-black rounded bg-yellow-400 font-bold">Sí</button>
+                        <button id="btn-ip-auto-no" onclick="setAutoIp(false)" class="px-2 py-0.5 border border-black rounded bg-gray-200">No</button>
+                    </div>
+                </div>
+
+                <!-- Static IP Fields -->
+                <div id="static-ip-group" class="hidden space-y-1 pl-2 border-l-2 border-blue-600">
+                    <div class="bg-white p-1 rounded border border-gray-600 flex justify-between items-center">
+                        <span>Dirección IP:</span>
+                        <button onclick="openKeyboard('ip')" id="field-ip" class="bg-gray-50 px-1 border border-black font-mono">192.168.1.50</button>
+                    </div>
+                    <div class="bg-white p-1 rounded border border-gray-600 flex justify-between items-center">
+                        <span>Máscara subred:</span>
+                        <button onclick="openKeyboard('subnet')" id="field-subnet" class="bg-gray-50 px-1 border border-black font-mono">255.255.255.0</button>
+                    </div>
+                    <div class="bg-white p-1 rounded border border-gray-600 flex justify-between items-center">
+                        <span>Puerta enlace:</span>
+                        <button onclick="openKeyboard('gateway')" id="field-gateway" class="bg-gray-50 px-1 border border-black font-mono">192.168.1.1</button>
+                    </div>
+                </div>
+
+                <!-- Auto DNS -->
+                <div class="bg-white p-1 rounded border border-black flex justify-between items-center">
+                    <span class="font-bold">Obtener DNS auto:</span>
+                    <div class="flex gap-1">
+                        <button id="btn-dns-auto-yes" onclick="setAutoDns(true)" class="px-2 py-0.5 border border-black rounded bg-gray-200">Sí</button>
+                        <button id="btn-dns-auto-no" onclick="setAutoDns(false)" class="px-2 py-0.5 border border-black rounded bg-yellow-400 font-bold">No</button>
+                    </div>
+                </div>
+
+                <!-- Static DNS Fields -->
+                <div id="static-dns-group" class="space-y-1 pl-2 border-l-2 border-amber-600">
+                    <div class="bg-amber-50 p-1 rounded border border-amber-600 flex justify-between items-center">
+                        <span class="font-bold">DNS Primario:</span>
+                        <button onclick="openKeyboard('dns1')" id="field-dns1" class="bg-white px-1 border border-black font-mono text-blue-900 font-bold">178.062.043.212</button>
+                    </div>
+                    <div class="bg-amber-50 p-1 rounded border border-amber-600 flex justify-between items-center">
+                        <span class="font-bold">DNS Secundario:</span>
+                        <button onclick="openKeyboard('dns2')" id="field-dns2" class="bg-white px-1 border border-black font-mono">001.001.001.001</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-1 border-t border-blue-400">
+                <button onclick="navigateTo('view-slot-detail', true)" class="w-24 h-8 ds-btn-gray rounded-lg flex items-center justify-center">
+                    <span class="pixel-ds-body">Cancelar</span>
+                </button>
+                <button onclick="saveManualSettings()" class="w-28 h-8 ds-btn-orange rounded-lg flex items-center justify-center">
+                    <span class="pixel-ds-body">Guardar</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- VIEW 6: OPTIONS MENU -->
+        <div id="view-options" class="w-full h-full hidden flex-col justify-between">
+            <div class="space-y-2 pt-1">
+                <button onclick="showOptionInfo('mac')" class="w-full h-12 ds-btn-blue rounded-xl flex items-center justify-center p-2 text-center">
+                    <span class="pixel-ds-sm">Información de la consola</span>
+                </button>
+
+                <button onclick="showOptionInfo('transfer')" class="w-full h-12 ds-btn-blue rounded-xl flex items-center justify-center p-2 text-center">
+                    <span class="pixel-ds-sm">Transferir ID de usuario de Nintendo WFC</span>
+                </button>
+
+                <button onclick="showOptionInfo('erase')" class="w-full h-10 ds-btn-gray rounded-xl flex items-center justify-center p-2 text-center">
+                    <span class="pixel-ds-sm text-red-700">Borrar ID de Nintendo WFC</span>
+                </button>
+            </div>
+
+            <div class="flex justify-start">
+                <button onclick="navigateTo('view-main', true)" class="w-24 h-8 ds-btn-gray rounded-lg flex items-center justify-center">
+                    <span class="pixel-ds-body">Volver</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- KEYBOARD OVERLAY MODAL -->
+        <div id="keyboard-modal" class="absolute inset-0 bg-blue-950/95 z-50 hidden flex-col justify-between p-2 rounded">
+            <div class="bg-white p-1 rounded border-2 border-black flex justify-between items-center">
+                <span id="kb-label" class="pixel-ds-sm text-blue-900 font-bold">Introducir SSID:</span>
+                <input id="kb-input" type="text" class="font-mono text-xs px-1 border border-gray-500 rounded w-40 bg-yellow-50 text-black text-right" readonly>
+            </div>
+
+            <div id="kb-keys-grid" class="grid grid-cols-10 gap-0.5 my-1">
+                <!-- Keys rendered via JS -->
+            </div>
+
+            <div class="flex justify-between items-center gap-1">
+                <button onclick="kbBackspace()" class="flex-1 h-7 ds-btn-gray rounded text-[7px] font-bold">Borrar</button>
+                <button onclick="closeKeyboard(false)" class="w-16 h-7 ds-btn-gray rounded text-[7px]">Cancelar</button>
+                <button onclick="closeKeyboard(true)" class="w-20 h-7 ds-btn-orange rounded text-[7px] font-bold">Aceptar</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        /* ===================================================================
+           NINTENDO DS WFC ENGINE & AUDIO ENGINE (acept.mp3 / back.mp3)
+           =================================================================== */
+
+        // Internal Audio File Declarations
+        const sndAcept = new Audio('acept.mp3');
+        const sndBack = new Audio('back.mp3');
+
+        // Play Accept Audio with Safe Fallback
+        function playAceptSFX() {
+            sndAcept.currentTime = 0;
+            sndAcept.play().catch(e => {
+                // Fallback synth beep if file isn't present
+                playSynthBeep(1046.5, 1318.5, 0.05);
+            });
+        }
+
+        // Play Back Audio with Safe Fallback
+        function playBackSFX() {
+            sndBack.currentTime = 0;
+            sndBack.play().catch(e => {
+                // Fallback synth back beep if file isn't present
+                playSynthBeep(659.25, 523.25, 0.08);
+            });
+        }
+
+        // Web Audio API Fallback Synthesizer
+        let fallbackAudioCtx = null;
+        function playSynthBeep(freqStart, freqEnd, duration) {
+            try {
+                if (!fallbackAudioCtx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContext) fallbackAudioCtx = new AudioContext();
+                }
+                if (!fallbackAudioCtx) return;
+
+                const now = fallbackAudioCtx.currentTime;
+                const osc = fallbackAudioCtx.createOscillator();
+                const gain = fallbackAudioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(fallbackAudioCtx.destination);
+
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(freqStart, now);
+                osc.frequency.exponentialRampToValueAtTime(freqEnd, now + duration);
+                gain.gain.setValueAtTime(0.12, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
+                osc.start(now);
+                osc.stop(now + duration);
+            } catch (err) {}
+        }
+
+
+        // --- Connection Slot Models ---
+        let currentActiveSlot = 1;
+        let currentKbField = null;
+
+        const connectionSlots = {
+            1: {
+                configured: true,
+                ssid: "CASA_WIFI_DS",
+                wep: "1234567890WEP",
+                autoIp: true,
+                ip: "192.168.1.45",
+                subnet: "255.255.255.0",
+                gateway: "192.168.1.1",
+                autoDns: false,
+                dns1: "178.062.043.212",
+                dns2: "001.001.001.001"
+            },
+            2: {
+                configured: false,
+                ssid: "",
+                wep: "",
+                autoIp: true,
+                ip: "000.000.000.000",
+                subnet: "000.000.000.000",
+                gateway: "000.000.000.000",
+                autoDns: true,
+                dns1: "000.000.000.000",
+                dns2: "000.000.000.000"
+            },
+            3: {
+                configured: false,
+                ssid: "",
+                wep: "",
+                autoIp: true,
+                ip: "000.000.000.000",
+                subnet: "000.000.000.000",
+                gateway: "000.000.000.000",
+                autoDns: true,
+                dns1: "000.000.000.000",
+                dns2: "000.000.000.000"
+            }
+        };
+
+        const simulatedNetworks = [
+            { ssid: "CASA_WIFI_DS", signal: 3, security: "WEP", open: false },
+            { ssid: "MOVISTAR_2G_RETRO", signal: 3, security: "WEP", open: false },
+            { ssid: "NINTENDO_HOTSPOT", signal: 2, security: "ABIERTA", open: true },
+            { ssid: "WIFI_VECINO_5G", signal: 1, security: "WPA2", open: false, incompatible: true }
+        ];
+
+        function navigateTo(viewId, isBackAction = false) {
+            if (isBackAction) playBackSFX();
+            else playAceptSFX();
+
+            const views = ['view-main', 'view-connections', 'view-slot-detail', 'view-scan', 'view-manual', 'view-options'];
+            views.forEach(v => document.getElementById(v).classList.add('hidden'));
+
+            const target = document.getElementById(viewId);
+            if (target) {
+                target.classList.remove('hidden');
+                target.classList.add('flex');
+            }
+
+            updateTopDisplay(viewId);
+        }
+
+        function updateTopDisplay(viewId) {
+            const titleEl = document.getElementById('top-title');
+            const mainTextEl = document.getElementById('top-text-primary');
+            const subTextEl = document.getElementById('top-text-secondary');
+            const tagEl = document.getElementById('screen-state-tag');
+            const statusCard = document.getElementById('top-status-card');
+
+            statusCard.classList.add('hidden');
+
+            switch(viewId) {
+                case 'view-main':
+                    titleEl.innerText = "Ajustes de conexión a NWC";
+                    mainTextEl.innerText = "Elige los ajustes que quieres modificar.";
+                    subTextEl.innerText = "Si necesitas ayuda adicional, consulta el manual de instrucciones de la consola o juego.";
+                    tagEl.innerText = "MENÚ PRINCIPAL";
+                    break;
+
+                case 'view-connections':
+                    titleEl.innerText = "Ajustes de conexión";
+                    mainTextEl.innerText = "Selecciona la conexión que deseas configurar o modificar.";
+                    subTextEl.innerText = "Puedes guardar hasta tres configuraciones de conexión distintas.";
+                    tagEl.innerText = "SELECCIÓN CONEXIÓN";
+                    updateSlotButtonsUI();
+                    break;
+
+                case 'view-slot-detail':
+                    titleEl.innerText = `Conexión ${currentActiveSlot}`;
+                    mainTextEl.innerText = `Configurando Conexión ${currentActiveSlot}. Selecciona el método de búsqueda o prueba.`;
+                    subTextEl.innerText = "Toca \"Buscar punto de acceso\" para escanear redes inalámbricas cercanas.";
+                    tagEl.innerText = `DETALLE CONEXIÓN ${currentActiveSlot}`;
+                    document.getElementById('detail-slot-title').innerText = `CONEXIÓN ${currentActiveSlot}`;
+                    break;
+
+                case 'view-scan':
+                    titleEl.innerText = "Buscar punto de acceso";
+                    mainTextEl.innerText = "Selecciona el punto de acceso al que deseas conectarte.";
+                    subTextEl.innerText = "Las redes con candado requieren clave WEP compatible con Nintendo DS.";
+                    tagEl.innerText = "ESCANEO WI-FI";
+                    break;
+
+                case 'view-manual':
+                    titleEl.innerText = "Configuración manual";
+                    mainTextEl.innerText = "Introduce manualmente los parámetros de red y servidor DNS.";
+                    subTextEl.innerText = "Puedes introducir DNS personalizados para servidores alternativos.";
+                    tagEl.innerText = "AJUSTES MANUALES";
+                    document.getElementById('manual-slot-name').innerText = `CONEXIÓN ${currentActiveSlot}`;
+                    loadManualFieldsFromSlot();
+                    break;
+
+                case 'view-options':
+                    titleEl.innerText = "Opciones";
+                    mainTextEl.innerText = "Consulta la información de la consola o gestiona tu ID de Nintendo WFC.";
+                    subTextEl.innerText = "La dirección MAC es un identificador único de esta consola.";
+                    tagEl.innerText = "OPCIONES DE SISTEMA";
+                    break;
+            }
+        }
+
+        function updateSlotButtonsUI() {
+            for (let i = 1; i <= 3; i++) {
+                const slot = connectionSlots[i];
+                const statusEl = document.getElementById(`slot-${i}-status`);
+                const cardEl = document.getElementById(`slot-${i}-card`);
+
+                if (slot.configured) {
+                    statusEl.innerText = "Listo (" + slot.ssid + ")";
+                    statusEl.className = "pixel-ds-sm text-green-950 bg-green-200 px-2 py-1 rounded border border-green-600 font-bold";
+                    cardEl.className = "w-full h-12 ds-slot-ready rounded-lg px-3 flex items-center justify-between cursor-pointer hover:brightness-105";
+                } else {
+                    statusEl.innerText = "Ninguna";
+                    statusEl.className = "pixel-ds-sm text-gray-700 bg-gray-200/90 px-2 py-1 rounded border border-gray-400";
+                    cardEl.className = "w-full h-12 ds-btn-gray rounded-lg px-3 flex items-center justify-between cursor-pointer hover:brightness-105";
+                }
+            }
+        }
+
+        function selectSlot(slotNum) {
+            currentActiveSlot = slotNum;
+            navigateTo('view-slot-detail');
+        }
+
+        function clearCurrentSlot() {
+            playBackSFX();
+            connectionSlots[currentActiveSlot] = {
+                configured: false,
+                ssid: "",
+                wep: "",
+                autoIp: true,
+                ip: "000.000.000.000",
+                subnet: "000.000.000.000",
+                gateway: "000.000.000.000",
+                autoDns: true,
+                dns1: "000.000.000.000",
+                dns2: "000.000.000.000"
+            };
+            showToast(`Ajustes de Conexión ${currentActiveSlot} borrados.`);
+            updateSlotButtonsUI();
+        }
+
+        function startWifiScan() {
+            navigateTo('view-scan');
+            const apListEl = document.getElementById('ap-list');
+            apListEl.innerHTML = `
+                <div class="p-4 text-center space-y-2">
+                    <p class="pixel-ds-sm animate-pulse text-blue-900">Buscando un punto de acceso...</p>
+                    <div class="inline-block w-5 h-5 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                </div>
+            `;
+
+            setTimeout(() => {
+                apListEl.innerHTML = '';
+                simulatedNetworks.forEach((net) => {
+                    const item = document.createElement('div');
+                    item.className = "bg-white p-2 rounded border-2 border-black flex items-center justify-between hover:bg-yellow-100 cursor-pointer shadow-sm";
+                    
+                    let lockIcon = net.open ? '🔓' : '🔒';
+                    let lockColor = net.open ? 'text-blue-600' : 'text-red-600';
+                    let statusNote = net.incompatible ? '<span class="text-[7px] text-red-600 block">Incompatible (WPA2)</span>' : '';
+
+                    item.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <span class="${lockColor} text-xs">${lockIcon}</span>
+                            <div>
+                                <p class="pixel-ds-sm font-bold truncate max-w-[150px]">${net.ssid}</p>
+                                ${statusNote}
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <span class="text-[7px] font-bold text-blue-800">${net.signal === 3 ? '📶 ALTA' : net.signal === 2 ? '📶 MEDIA' : '📶 BAJA'}</span>
+                        </div>
+                    `;
+
+                    item.onclick = () => onSelectNetwork(net);
+                    apListEl.appendChild(item);
+                });
+            }, 1000);
+        }
+
+        function onSelectNetwork(net) {
+            if (net.incompatible) {
+                playBackSFX();
+                showTopMessage("Error de seguridad", "Las opciones de seguridad de este punto de acceso no son compatibles con Nintendo DS.", true);
+                return;
+            }
+
+            const slot = connectionSlots[currentActiveSlot];
+            slot.ssid = net.ssid;
+
+            if (net.open) {
+                slot.wep = "";
+                slot.configured = true;
+                playAceptSFX();
+                showTopMessage("Punto de acceso vinculado", `Conectado a ${net.ssid}. Ajustes guardados.`);
+                setTimeout(() => {
+                    navigateTo('view-slot-detail');
+                }, 1200);
+            } else {
+                openKeyboard('wep', `Clave WEP para ${net.ssid}:`);
+            }
+        }
+
+        function runConnectionTest() {
+            const slot = connectionSlots[currentActiveSlot];
+            if (!slot.configured && !slot.ssid) {
+                playBackSFX();
+                showTopMessage("Sin Configuración", "No hay ninguna configuración guardada en esta conexión.", true);
+                return;
+            }
+
+            playAceptSFX();
+
+            const statusCard = document.getElementById('top-status-card');
+            const progressBar = document.getElementById('top-progress-bar');
+            const statusTitle = document.getElementById('top-status-title');
+            const statusSub = document.getElementById('top-status-sub');
+            const mainTextEl = document.getElementById('top-text-primary');
+
+            mainTextEl.innerText = "Realizando la prueba de conexión...";
+            statusCard.classList.remove('hidden');
+            statusTitle.innerText = "CONECTANDO...";
+            statusSub.innerText = "Probando el punto de acceso...";
+            progressBar.style.width = '10%';
+
+            let progress = 10;
+            const interval = setInterval(() => {
+                progress += 30;
+                progressBar.style.width = `${progress}%`;
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        playAceptSFX();
+                        statusTitle.innerText = "ÉXITO";
+                        statusTitle.className = "pixel-ds-title text-green-400 mb-1";
+                        statusSub.innerText = "Se ha establecido la conexión con éxito.";
+                        mainTextEl.innerText = "Se ha completado la prueba de conexión con éxito.";
+                        slot.configured = true;
+                        updateSlotButtonsUI();
+                    }, 400);
+                }
+            }, 500);
+        }
+
+        function loadManualFieldsFromSlot() {
+            const slot = connectionSlots[currentActiveSlot];
+            document.getElementById('field-ssid').innerText = slot.ssid || "Ninguna";
+            document.getElementById('field-wep').innerText = slot.wep ? "********" : "Ninguna";
+
+            setAutoIp(slot.autoIp);
+            document.getElementById('field-ip').innerText = slot.ip;
+            document.getElementById('field-subnet').innerText = slot.subnet;
+            document.getElementById('field-gateway').innerText = slot.gateway;
+
+            setAutoDns(slot.autoDns);
+            document.getElementById('field-dns1').innerText = slot.dns1;
+            document.getElementById('field-dns2').innerText = slot.dns2;
+        }
+
+        function setAutoIp(val) {
+            playAceptSFX();
+            const slot = connectionSlots[currentActiveSlot];
+            slot.autoIp = val;
+            const btnYes = document.getElementById('btn-ip-auto-yes');
+            const btnNo = document.getElementById('btn-ip-auto-no');
+            const group = document.getElementById('static-ip-group');
+
+            if (val) {
+                btnYes.className = "px-2 py-0.5 border border-black rounded bg-yellow-400 font-bold";
+                btnNo.className = "px-2 py-0.5 border border-black rounded bg-gray-200";
+                group.classList.add('hidden');
+            } else {
+                btnYes.className = "px-2 py-0.5 border border-black rounded bg-gray-200";
+                btnNo.className = "px-2 py-0.5 border border-black rounded bg-yellow-400 font-bold";
+                group.classList.remove('hidden');
+            }
+        }
+
+        function setAutoDns(val) {
+            playAceptSFX();
+            const slot = connectionSlots[currentActiveSlot];
+            slot.autoDns = val;
+            const btnYes = document.getElementById('btn-dns-auto-yes');
+            const btnNo = document.getElementById('btn-dns-auto-no');
+            const group = document.getElementById('static-dns-group');
+
+            if (val) {
+                btnYes.className = "px-2 py-0.5 border border-black rounded bg-yellow-400 font-bold";
+                btnNo.className = "px-2 py-0.5 border border-black rounded bg-gray-200";
+                group.classList.add('hidden');
+            } else {
+                btnYes.className = "px-2 py-0.5 border border-black rounded bg-gray-200";
+                btnNo.className = "px-2 py-0.5 border border-black rounded bg-yellow-400 font-bold";
+                group.classList.remove('hidden');
+            }
+        }
+
+        function saveManualSettings() {
+            playAceptSFX();
+            const slot = connectionSlots[currentActiveSlot];
+            slot.ssid = document.getElementById('field-ssid').innerText;
+            slot.ip = document.getElementById('field-ip').innerText;
+            slot.subnet = document.getElementById('field-subnet').innerText;
+            slot.gateway = document.getElementById('field-gateway').innerText;
+            slot.dns1 = document.getElementById('field-dns1').innerText;
+            slot.dns2 = document.getElementById('field-dns2').innerText;
+            slot.configured = true;
+
+            updateSlotButtonsUI();
+            showTopMessage("Ajustes guardados", `Los ajustes para la Conexión ${currentActiveSlot} han sido guardados.`);
+            navigateTo('view-slot-detail');
+        }
+
+        function openManualSetup() {
+            navigateTo('view-manual');
+        }
+
+        function openKeyboard(field, customLabel) {
+            playAceptSFX();
+            currentKbField = field;
+            const modal = document.getElementById('keyboard-modal');
+            const label = document.getElementById('kb-label');
+            const input = document.getElementById('kb-input');
+            const keysGrid = document.getElementById('kb-keys-grid');
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            label.innerText = customLabel || `Modificar ${field.toUpperCase()}:`;
+
+            let initialVal = "";
+            if (field === 'ssid') initialVal = document.getElementById('field-ssid').innerText;
+            else if (field === 'wep') initialVal = "";
+            else if (document.getElementById(`field-${field}`)) {
+                initialVal = document.getElementById(`field-${field}`).innerText;
+            }
+
+            input.value = initialVal === 'Ninguna' ? '' : initialVal;
+
+            keysGrid.innerHTML = '';
+            const isNumeric = ['ip', 'subnet', 'gateway', 'dns1', 'dns2'].includes(field);
+            const chars = isNumeric 
+                ? ['1','2','3','4','5','6','7','8','9','0','.'] 
+                : ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','1','2','3','4','5','6','7','8','9','0','-','_'];
+
+            chars.forEach(c => {
+                const btn = document.createElement('button');
+                btn.className = "h-7 ds-btn-gray rounded font-mono text-xs font-bold active:bg-yellow-300";
+                btn.innerText = c;
+                btn.onclick = () => {
+                    playAceptSFX();
+                    if (input.value.length < 24) input.value += c;
+                };
+                keysGrid.appendChild(btn);
+            });
+        }
+
+        function kbBackspace() {
+            playBackSFX();
+            const input = document.getElementById('kb-input');
+            input.value = input.value.slice(0, -1);
+        }
+
+        function closeKeyboard(save) {
+            if (save) playAceptSFX();
+            else playBackSFX();
+
+            const modal = document.getElementById('keyboard-modal');
+            const input = document.getElementById('kb-input');
+
+            if (save && currentKbField) {
+                const val = input.value.trim() || 'Ninguna';
+                if (currentKbField === 'wep' && val !== 'Ninguna') {
+                    connectionSlots[currentActiveSlot].wep = val;
+                    connectionSlots[currentActiveSlot].configured = true;
+                    showToast("Clave WEP guardada");
+                    if (!document.getElementById('view-scan').classList.contains('hidden')) {
+                        navigateTo('view-slot-detail');
+                    }
+                } else if (document.getElementById(`field-${currentKbField}`)) {
+                    document.getElementById(`field-${currentKbField}`).innerText = val;
+                }
+            }
+
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function showOptionInfo(type) {
+            playAceptSFX();
+            if (type === 'mac') {
+                showTopMessage("Información de la consola", "Dirección MAC: 00-09-BF-F4-8E-11\nID de usuario de NWC: 4509-1289-9921");
+            } else if (type === 'transfer') {
+                showTopMessage("Transferir ID de NWC", "Inicia la transferencia inalámbrica con otra consola Nintendo DS cercana.");
+            } else if (type === 'erase') {
+                playBackSFX();
+                showTopMessage("Atención", "Si borras tu ID de Nintendo WFC perderás la lista de amigos grabada.", true);
+            }
+        }
+
+        function openUsbConnectorModal() {
+            playAceptSFX();
+            showTopMessage("Conector USB Wi-Fi", "Inserta el Conector USB Wi-Fi de Nintendo en tu PC e inicia el software de registro.");
+        }
+
+        function showTopMessage(title, message, isError = false) {
+            const titleEl = document.getElementById('top-title');
+            const mainTextEl = document.getElementById('top-text-primary');
+            const subTextEl = document.getElementById('top-text-secondary');
+
+            titleEl.innerText = title;
+            mainTextEl.innerText = message;
+            mainTextEl.className = isError ? "pixel-ds-body leading-relaxed text-red-300 font-bold" : "pixel-ds-body leading-relaxed text-yellow-300";
+            subTextEl.innerText = "Pulsa en la pantalla inferior para continuar.";
+        }
+
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-4 left-1/2 -translate-x-1/2 bg-black/90 text-yellow-300 pixel-ds-sm px-4 py-2 rounded border-2 border-amber-400 z-50 shadow-2xl";
+            toast.innerText = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        }
+
+        // Touch Stylus Feedback Effect
+        document.getElementById('touch-screen').addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const stylus = document.createElement('div');
+            stylus.className = 'stylus-effect';
+            stylus.style.left = `${x - 10}px`;
+            stylus.style.top = `${y - 10}px`;
+            this.appendChild(stylus);
+
+            setTimeout(() => stylus.remove(), 250);
+        });
+
+        window.onload = function() {
+            updateSlotButtonsUI();
+            navigateTo('view-main');
+        };
+    </script>
+</body>
+</html>
