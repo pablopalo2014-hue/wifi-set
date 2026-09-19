@@ -7,14 +7,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --ds-blue-header: #0052ad;
             --ds-blue-body: #003080;
             --ds-bg-grid-1: #c8e0f0;
-            --ds-bg-grid-2: #b0d0e8; 
+            --ds-bg-grid-2: #b0d0e8;
             --ds-orange-start: #ffaa00;
             --ds-orange-mid: #e07000;
             --ds-orange-end: #b04000;
@@ -96,14 +96,8 @@
 
         .pixel-ds-lg {
             font-family: 'Press Start 2P', monospace;
-            font-size: 12px;
+            font-size: 11px;
             line-height: 1.4;
-        }
-
-        /* Authentic NDS Bevels & Buttons */
-        .ds-border-box {
-            border: 2px solid #000000;
-            box-shadow: inset 2px 2px 0px rgba(255, 255, 255, 0.7), inset -2px -2px 0px rgba(0, 0, 0, 0.4);
         }
 
         .ds-btn-orange {
@@ -183,7 +177,6 @@
             z-index: 99;
         }
 
-        /* Custom NDS scrollbar styling */
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -207,9 +200,8 @@
         <div class="w-full bg-gradient-to-r from-blue-950 via-blue-700 to-blue-950 border-2 border-black px-2 py-1 flex items-center justify-between shadow">
             <div class="flex items-center gap-1.5 truncate">
                 <div class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></div>
-                <span id="top-title" class="pixel-ds-title text-white truncate">Ajustes de conexión a NWC</span>
+                <span id="top-title" class="pixel-ds-title text-white truncate">Ajustes de conexión de Nintendo Wi-Fi</span>
             </div>
-            <!-- Signal Bars Icon -->
             <div class="flex items-end gap-0.5 h-3.5 w-5 bg-blue-950 p-0.5 rounded border border-blue-400">
                 <div class="w-1 h-1 bg-green-400"></div>
                 <div class="w-1 h-2 bg-green-400"></div>
@@ -263,7 +255,7 @@
         <div id="view-main" class="w-full h-full flex flex-col justify-between">
             <div class="space-y-2.5 pt-2">
                 <button onclick="navigateTo('view-connections')" class="w-full h-24 ds-btn-orange rounded-xl p-2 flex items-center justify-center text-center transition-transform active:scale-[0.98]">
-                    <span class="pixel-ds-lg">Ajustes de conexión a<br>Nintendo Wi-Fi Connection</span>
+                    <span class="pixel-ds-lg">Ajustes de conexión de<br>Nintendo Wi-Fi</span>
                 </button>
 
                 <button onclick="navigateTo('view-options')" class="w-full h-14 ds-btn-blue rounded-xl p-2 flex items-center justify-center text-center transition-transform active:scale-[0.98]">
@@ -281,25 +273,21 @@
         <!-- VIEW 2: CONNECTION SLOTS MENU -->
         <div id="view-connections" class="w-full h-full hidden flex-col justify-between">
             <div class="space-y-2 pt-1">
-                <!-- Slot 1 -->
                 <div id="slot-1-card" onclick="selectSlot(1)" class="w-full h-12 ds-btn-gray rounded-lg px-3 flex items-center justify-between cursor-pointer hover:brightness-105">
                     <span class="pixel-ds-body font-bold">Conexión 1</span>
-                    <span id="slot-1-status" class="pixel-ds-sm text-gray-700 bg-gray-200/90 px-2 py-1 rounded border border-gray-400">Ninguna</span>
+                    <span id="slot-1-status" class="pixel-ds-sm text-gray-700 bg-gray-200/90 px-2 py-1 rounded border border-gray-400">Sin configurar</span>
                 </div>
 
-                <!-- Slot 2 -->
                 <div id="slot-2-card" onclick="selectSlot(2)" class="w-full h-12 ds-btn-gray rounded-lg px-3 flex items-center justify-between cursor-pointer hover:brightness-105">
                     <span class="pixel-ds-body font-bold">Conexión 2</span>
-                    <span id="slot-2-status" class="pixel-ds-sm text-gray-700 bg-gray-200/90 px-2 py-1 rounded border border-gray-400">Ninguna</span>
+                    <span id="slot-2-status" class="pixel-ds-sm text-gray-700 bg-gray-200/90 px-2 py-1 rounded border border-gray-400">Sin configurar</span>
                 </div>
 
-                <!-- Slot 3 -->
                 <div id="slot-3-card" onclick="selectSlot(3)" class="w-full h-12 ds-btn-gray rounded-lg px-3 flex items-center justify-between cursor-pointer hover:brightness-105">
                     <span class="pixel-ds-body font-bold">Conexión 3</span>
-                    <span id="slot-3-status" class="pixel-ds-sm text-gray-700 bg-gray-200/90 px-2 py-1 rounded border border-gray-400">Ninguna</span>
+                    <span id="slot-3-status" class="pixel-ds-sm text-gray-700 bg-gray-200/90 px-2 py-1 rounded border border-gray-400">Sin configurar</span>
                 </div>
 
-                <!-- USB Connector -->
                 <button onclick="openUsbConnectorModal()" class="w-full h-12 ds-btn-blue rounded-lg px-2 flex items-center justify-center text-center">
                     <span class="pixel-ds-sm">Conector USB Wi-Fi de Nintendo</span>
                 </button>
@@ -368,7 +356,6 @@
             </div>
 
             <div class="flex-1 overflow-y-auto my-1 pr-1 space-y-1 text-[8px]">
-                <!-- SSID -->
                 <div class="bg-white p-1 rounded border border-black flex justify-between items-center">
                     <span class="font-bold">SSID:</span>
                     <button onclick="openKeyboard('ssid')" id="field-ssid" class="bg-gray-100 px-2 py-0.5 border border-black rounded font-mono truncate max-w-[160px]">
@@ -376,7 +363,6 @@
                     </button>
                 </div>
 
-                <!-- WEP Key -->
                 <div class="bg-white p-1 rounded border border-black flex justify-between items-center">
                     <span class="font-bold">Clave WEP:</span>
                     <button onclick="openKeyboard('wep')" id="field-wep" class="bg-gray-100 px-2 py-0.5 border border-black rounded font-mono truncate max-w-[160px]">
@@ -384,7 +370,6 @@
                     </button>
                 </div>
 
-                <!-- Auto IP -->
                 <div class="bg-white p-1 rounded border border-black flex justify-between items-center">
                     <span class="font-bold">Obtener IP auto:</span>
                     <div class="flex gap-1">
@@ -393,7 +378,6 @@
                     </div>
                 </div>
 
-                <!-- Static IP Fields -->
                 <div id="static-ip-group" class="hidden space-y-1 pl-2 border-l-2 border-blue-600">
                     <div class="bg-white p-1 rounded border border-gray-600 flex justify-between items-center">
                         <span>Dirección IP:</span>
@@ -409,7 +393,6 @@
                     </div>
                 </div>
 
-                <!-- Auto DNS -->
                 <div class="bg-white p-1 rounded border border-black flex justify-between items-center">
                     <span class="font-bold">Obtener DNS auto:</span>
                     <div class="flex gap-1">
@@ -418,7 +401,6 @@
                     </div>
                 </div>
 
-                <!-- Static DNS Fields -->
                 <div id="static-dns-group" class="space-y-1 pl-2 border-l-2 border-amber-600">
                     <div class="bg-amber-50 p-1 rounded border border-amber-600 flex justify-between items-center">
                         <span class="font-bold">DNS Primario:</span>
@@ -445,7 +427,7 @@
         <div id="view-options" class="w-full h-full hidden flex-col justify-between">
             <div class="space-y-2 pt-1">
                 <button onclick="showOptionInfo('mac')" class="w-full h-12 ds-btn-blue rounded-xl flex items-center justify-center p-2 text-center">
-                    <span class="pixel-ds-sm">Información de la consola</span>
+                    <span class="pixel-ds-sm">Datos de la consola</span>
                 </button>
 
                 <button onclick="showOptionInfo('transfer')" class="w-full h-12 ds-btn-blue rounded-xl flex items-center justify-center p-2 text-center">
@@ -486,57 +468,22 @@
 
     <script>
         /* ===================================================================
-           NINTENDO DS WFC ENGINE & AUDIO ENGINE (acept.mp3 / back.mp3)
+           NINTENDO DS WFC ENGINE & AUDIO SYSTEM (Strictly acept.mp3 & back.mp3)
            =================================================================== */
 
-        // Internal Audio File Declarations
+        // Exact dual HTML Audio instances requested (no Web Audio API synth)
         const sndAcept = new Audio('acept.mp3');
         const sndBack = new Audio('back.mp3');
 
-        // Play Accept Audio with Safe Fallback
         function playAceptSFX() {
             sndAcept.currentTime = 0;
-            sndAcept.play().catch(e => {
-                // Fallback synth beep if file isn't present
-                playSynthBeep(1046.5, 1318.5, 0.05);
-            });
+            sndAcept.play().catch(() => {});
         }
 
-        // Play Back Audio with Safe Fallback
         function playBackSFX() {
             sndBack.currentTime = 0;
-            sndBack.play().catch(e => {
-                // Fallback synth back beep if file isn't present
-                playSynthBeep(659.25, 523.25, 0.08);
-            });
+            sndBack.play().catch(() => {});
         }
-
-        // Web Audio API Fallback Synthesizer
-        let fallbackAudioCtx = null;
-        function playSynthBeep(freqStart, freqEnd, duration) {
-            try {
-                if (!fallbackAudioCtx) {
-                    const AudioContext = window.AudioContext || window.webkitAudioContext;
-                    if (AudioContext) fallbackAudioCtx = new AudioContext();
-                }
-                if (!fallbackAudioCtx) return;
-
-                const now = fallbackAudioCtx.currentTime;
-                const osc = fallbackAudioCtx.createOscillator();
-                const gain = fallbackAudioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(fallbackAudioCtx.destination);
-
-                osc.type = 'square';
-                osc.frequency.setValueAtTime(freqStart, now);
-                osc.frequency.exponentialRampToValueAtTime(freqEnd, now + duration);
-                gain.gain.setValueAtTime(0.12, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
-                osc.start(now);
-                osc.stop(now + duration);
-            } catch (err) {}
-        }
-
 
         // --- Connection Slot Models ---
         let currentActiveSlot = 1;
@@ -615,7 +562,7 @@
 
             switch(viewId) {
                 case 'view-main':
-                    titleEl.innerText = "Ajustes de conexión a NWC";
+                    titleEl.innerText = "Ajustes de conexión de Nintendo Wi-Fi";
                     mainTextEl.innerText = "Elige los ajustes que quieres modificar.";
                     subTextEl.innerText = "Si necesitas ayuda adicional, consulta el manual de instrucciones de la consola o juego.";
                     tagEl.innerText = "MENÚ PRINCIPAL";
@@ -655,7 +602,7 @@
 
                 case 'view-options':
                     titleEl.innerText = "Opciones";
-                    mainTextEl.innerText = "Consulta la información de la consola o gestiona tu ID de Nintendo WFC.";
+                    mainTextEl.innerText = "Consulta los datos de la consola o gestiona tu ID de Nintendo WFC.";
                     subTextEl.innerText = "La dirección MAC es un identificador único de esta consola.";
                     tagEl.innerText = "OPCIONES DE SISTEMA";
                     break;
@@ -673,7 +620,7 @@
                     statusEl.className = "pixel-ds-sm text-green-950 bg-green-200 px-2 py-1 rounded border border-green-600 font-bold";
                     cardEl.className = "w-full h-12 ds-slot-ready rounded-lg px-3 flex items-center justify-between cursor-pointer hover:brightness-105";
                 } else {
-                    statusEl.innerText = "Ninguna";
+                    statusEl.innerText = "Sin configurar";
                     statusEl.className = "pixel-ds-sm text-gray-700 bg-gray-200/90 px-2 py-1 rounded border border-gray-400";
                     cardEl.className = "w-full h-12 ds-btn-gray rounded-lg px-3 flex items-center justify-between cursor-pointer hover:brightness-105";
                 }
@@ -954,7 +901,7 @@
         function showOptionInfo(type) {
             playAceptSFX();
             if (type === 'mac') {
-                showTopMessage("Información de la consola", "Dirección MAC: 00-09-BF-F4-8E-11\nID de usuario de NWC: 4509-1289-9921");
+                showTopMessage("Datos de la consola", "Dirección MAC: 00-09-BF-F4-8E-11\nID de usuario de NWC: 4509-1289-9921");
             } else if (type === 'transfer') {
                 showTopMessage("Transferir ID de NWC", "Inicia la transferencia inalámbrica con otra consola Nintendo DS cercana.");
             } else if (type === 'erase') {
