@@ -468,7 +468,7 @@
 
     <script>
         /* ===================================================================
-           NINTENDO DS WFC ENGINE & AUDIO SYSTEM (enter.mp3 & tecl.mp3)
+           NINTENDO DS WFC ENGINE & AUDIO SYSTEM
            =================================================================== */
 
         const sndEnter = new Audio('enter.mp3');
@@ -550,6 +550,11 @@
             if (isBackAction) {
                 playBackSFX();
             } else {
+                playAceptSFX(); // Sonido de acción predeterminado para botones
+            }
+
+            // enter.mp3 solo suena al ENTRAR a la pantalla de wifis guardadas (view-connections)
+            if (viewId === 'view-connections' && !isBackAction) {
                 playEnterSFX();
             }
 
@@ -874,7 +879,7 @@
                 btn.className = "h-7 ds-btn-gray rounded font-mono text-xs font-bold active:bg-yellow-300";
                 btn.innerText = c;
                 btn.onclick = () => {
-                    playTecSFX(); // Sonido tecl.mp3 al presionar el teclado digital
+                    playTecSFX(); // Sonido tecl.mp3 al presionar teclas del teclado virtual
                     if (input.value.length < 24) input.value += c;
                 };
                 keysGrid.appendChild(btn);
@@ -882,7 +887,7 @@
         }
 
         function kbBackspace() {
-            playTecSFX(); // Sonido tecl.mp3 al borrar en el teclado digital
+            playTecSFX(); // Sonido tecl.mp3 al borrar
             const input = document.getElementById('kb-input');
             input.value = input.value.slice(0, -1);
         }
